@@ -4,6 +4,8 @@ use Illuminate\Database\Seeder;
 
 class CategorySeeder extends Seeder
 {
+    const MAX_CATEGORIES_ID = 10;
+
     /**
      * Run the database seeds.
      *
@@ -29,5 +31,13 @@ class CategorySeeder extends Seeder
         ];
 
         \App\Category::buildTree($categories);
+    }
+
+    public static function getRandomCategories($number): array
+    {
+        $randomCategoriesIds = range(1, self::MAX_CATEGORIES_ID);
+        shuffle($randomCategoriesIds);
+        $randomCategoriesIds = array_slice($randomCategoriesIds, 0, $number);
+        return array_map(function ($catId) {return \App\Category::find($catId);}, $randomCategoriesIds);
     }
 }
