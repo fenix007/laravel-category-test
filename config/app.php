@@ -180,7 +180,8 @@ return [
         /**
          * Custom services
          */
-        \Baum\Providers\BaumServiceProvider::class
+        \Baum\Providers\BaumServiceProvider::class,
+        \Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class
     ],
 
     /*
