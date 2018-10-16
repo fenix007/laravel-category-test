@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Product;
-use App\Transformers\ProductTransformer;
+use App\Category;
+use App\Http\Controllers\Controller;
+use App\Transformers\CategoryTransformer;
 use Illuminate\Http\Request;
 
-class ProductController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,10 +16,10 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
+        $categories = Category::all();
 
         return fractal()
-            ->collection($products, new ProductTransformer)
+            ->collection($categories, new CategoryTransformer)
             ->toArray();
     }
 
@@ -30,23 +31,23 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $product = Product::create($request->all());
+        $category = Category::create($request->all());
 
         return fractal()
-            ->item($product, new ProductTransformer)
+            ->item($category, new CategoryTransformer)
             ->toArray();
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Product  $product
+     * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $product)
+    public function show(Category $category)
     {
         return fractal()
-            ->item($product, new ProductTransformer)
+            ->item($category, new CategoryTransformer)
             ->toArray();
     }
 
@@ -54,27 +55,27 @@ class ProductController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Product  $product
+     * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, Category $category)
     {
-        $product->update($request->all());
+        $category->update($request->all());
 
         return fractal()
-            ->item($product, new ProductTransformer)
+            ->item($category, new CategoryTransformer)
             ->toArray();
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Product  $product
+     * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy(Category $category)
     {
-        $product->delete();
+        $category->delete();
 
         return response()->json(null, 204);
     }

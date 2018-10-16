@@ -12,7 +12,8 @@ class CategoryTransformer extends TransformerAbstract
     {
         return [
             'id' => $category->id,
-            'name' => $category->name
+            'name' => $category->name,
+            'parent_id' => $category->parent_id
         ];
     }
 }

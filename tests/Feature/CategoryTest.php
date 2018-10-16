@@ -23,7 +23,7 @@ class CategoryTest extends TestCase
             ->assertJsonStructure([
                 'data' => [
                     '*' => [
-                        'id', 'name'
+                        'id', 'name', 'parent_id'
                     ]
                 ]
             ]);

@@ -30,6 +30,14 @@ class ProductTest extends TestCase
     }
 
     /** @test */
+    public function it_can_not_see_list_of_products_not_exists_category()
+    {
+        $this->getJson('/api/product?category=-1')
+            ->assertStatus(200)
+            ->assertExactJson(["data" => []]);
+    }
+
+    /** @test */
     public function it_can_see_single_product_item()
     {
         $product = Product::first();
