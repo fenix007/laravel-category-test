@@ -15844,7 +15844,7 @@ function toComment(sourceMap) {
 var disposed = false
 var normalizeComponent = __webpack_require__(17)
 /* script */
-var __vue_script__ = null
+var __vue_script__ = __webpack_require__(18)
 /* template */
 var __vue_template__ = __webpack_require__(19)
 /* template functional */
@@ -15994,7 +15994,74 @@ module.exports = function normalizeComponent (
 
 
 /***/ }),
-/* 18 */,
+/* 18 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            products: []
+        };
+    },
+    methods: {
+        categoryString: function categoryString(product) {
+            return product.categories.data.map(function (cat) {
+                return cat.name;
+            }).join(', ');
+        },
+        truncate: function truncate(string, maxLength) {
+            if (string.length <= maxLength) {
+                return string;
+            }
+            return string.substring(0, maxLength) + '...';
+        }
+    },
+    mounted: function mounted() {
+        var app = this;
+        this.$http.get('/api/product').then(function (resp) {
+            app.products = resp.data.data;
+        }).catch(function (resp) {
+            console.log(resp);
+            alert("Could not load products");
+        });
+    }
+});
+
+/***/ }),
 /* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -16002,18 +16069,55 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", [
+    _c("div", { staticClass: "panel panel-default" }, [
+      _c("div", { staticClass: "panel-heading" }, [_vm._v("Products list")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "panel-body" }, [
+        _c("table", { staticClass: "table table-bordered table-striped" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c(
+            "tbody",
+            _vm._l(_vm.products, function(product, index) {
+              return _c("tr", [
+                _c("td", [_vm._v(_vm._s(product.id))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(product.name))]),
+                _vm._v(" "),
+                _c("td", [
+                  _vm._v(_vm._s(_vm.truncate(product.description, 50)))
+                ]),
+                _vm._v(" "),
+                _c("td", [_c("img", { attrs: { src: product.photo } })]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(_vm.categoryString(product)))])
+              ])
+            })
+          )
+        ])
+      ])
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("div", { staticClass: "panel panel-default" }, [
-        _c("div", { staticClass: "panel-heading" }, [_vm._v("Products list")]),
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("Id")]),
         _vm._v(" "),
-        _c("div", { staticClass: "panel-body" })
+        _c("th", [_vm._v("Name")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Description")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Photo")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Categories")]),
+        _vm._v(" "),
+        _c("th", { attrs: { width: "100" } }, [_vm._v(" ")])
       ])
     ])
   }
