@@ -16052,16 +16052,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 return string;
             }
             return string.substring(0, maxLength) + '...';
+        },
+        loadProducts: function loadProducts() {
+            var app = this;
+            var category = app.$route.query.category || 0;
+            this.$http.get('/api/product?category=' + category).then(function (resp) {
+                app.products = resp.data.data;
+            }).catch(function (resp) {
+                console.log(resp);
+                alert("Could not load products");
+            });
         }
     },
     mounted: function mounted() {
-        var app = this;
-        this.$http.get('/api/product').then(function (resp) {
-            app.products = resp.data.data;
-        }).catch(function (resp) {
-            console.log(resp);
-            alert("Could not load products");
-        });
+        this.loadProducts();
+    },
+
+    watch: {
+        '$route': function $route(to, from) {
+            var categoryHash = this.$route.hash.substr(1);
+            var category = categoryHash.substr(categoryHash.search(/(?<=^|&)category=/)).split('&')[0].split('=')[1];
+            if (category) {
+                this.$router.replace({ query: { category: category } });
+                this.loadProducts();
+            }
+        }
     }
 });
 
@@ -16803,7 +16818,7 @@ var ListToTree = function () {
     }
 
     _createClass(ListToTree, [{
-        key: "toTree",
+        key: 'toTree',
         value: function toTree(list) {
             var map = {},
                 node = void 0,
@@ -16811,6 +16826,7 @@ var ListToTree = function () {
                 i = void 0;
             for (i = 0; i < list.length; i += 1) {
                 map[list[i].id] = i; // initialize the map
+                list[i].element = 'category=' + list[i].id;
             }
             for (i = 0; i < list.length; i += 1) {
                 node = list[i];

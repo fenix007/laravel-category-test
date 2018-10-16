@@ -45,18 +45,34 @@
                     return string;
                 }
                 return string.substring(0, maxLength) + '...';
+            },
+            loadProducts () {
+                const app = this;
+                let category =  app.$route.query.category || 0
+                this.$http.get('/api/product?category=' + category)
+                    .then(function (resp) {
+                        app.products = resp.data.data;
+                    })
+                    .catch(function (resp) {
+                        console.log(resp);
+                        alert("Could not load products");
+                    });
             }
         },
         mounted() {
-            const app = this;
-            this.$http.get('/api/product')
-                .then(function (resp) {
-                    app.products = resp.data.data;
-                })
-                .catch(function (resp) {
-                    console.log(resp);
-                    alert("Could not load products");
-                });
+            this.loadProducts()
+        },
+        watch: {
+            '$route' (to, from) {
+                let categoryHash = this.$route.hash.substr(1);
+                let category = categoryHash.substr(categoryHash.search(/(?<=^|&)category=/))
+                        .split('&')[0]
+                        .split('=')[1];
+                if (category) {
+                    this.$router.replace({query: {category: category}});
+                    this.loadProducts();
+                }
+            }
         }
     }
 </script>

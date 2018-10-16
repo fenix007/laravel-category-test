@@ -3,6 +3,7 @@ export default class ListToTree {
         let map = {}, node, roots = [], i;
         for (i = 0; i < list.length; i += 1) {
             map[list[i].id] = i; // initialize the map
+            list[i].element = 'category=' + list[i].id;
         }
         for (i = 0; i < list.length; i += 1) {
             node = list[i];
