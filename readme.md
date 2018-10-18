@@ -13,7 +13,7 @@ php artisan db:seed
 
 Check tests
 ```bash
- php artisan migrate --database=test
+ php artisan migrate --database=testing
 ./vendor/bin/phpunit
 ```
 
