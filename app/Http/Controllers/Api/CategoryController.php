@@ -2,13 +2,21 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\Category;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CategoryRequest;
+use App\Models\Category;
+use App\Services\CategoryService;
 use App\Transformers\CategoryTransformer;
-use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+    private $categoryService;
+
+    public function __construct(CategoryService $categoryService)
+    {
+        $this->categoryService = $categoryService;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +24,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
+        $categories = $this->categoryService->all();
 
         return fractal()
             ->collection($categories, new CategoryTransformer)
@@ -26,12 +34,12 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param CategoryRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        $category = Category::create($request->all());
+        $category = $this->categoryService->create($request->all());
 
         return fractal()
             ->item($category, new CategoryTransformer)
@@ -54,11 +62,11 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Category  $category
+     * @param CategoryRequest $request
+     * @param Category $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(CategoryRequest $request, Category $category)
     {
         $category->update($request->all());
 
@@ -75,7 +83,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        $category->delete();
+        $this->categoryService->remove($category);
 
         return response()->json(null, 204);
     }
