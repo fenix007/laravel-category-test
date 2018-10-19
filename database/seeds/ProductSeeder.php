@@ -13,7 +13,7 @@ class ProductSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Product::class, 50)->create()->each(function ($p) {
+        factory(App\Models\Product::class, 50)->create()->each(function ($p) {
             $numCategories = rand(1, self::PROD_MAX_CATEGORIES);
             $p->categories()->saveMany(CategorySeeder::getRandomCategories($numCategories));
         });

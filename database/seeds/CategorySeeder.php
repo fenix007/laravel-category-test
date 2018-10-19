@@ -30,7 +30,7 @@ class CategorySeeder extends Seeder
             ['id' => 10, 'name' => 'Cell Phones']
         ];
 
-        \App\Category::buildTree($categories);
+        \App\Models\Category::buildTree($categories);
     }
 
     public static function getRandomCategories($number): array
@@ -38,6 +38,6 @@ class CategorySeeder extends Seeder
         $randomCategoriesIds = range(1, self::MAX_CATEGORIES_ID);
         shuffle($randomCategoriesIds);
         $randomCategoriesIds = array_slice($randomCategoriesIds, 0, $number);
-        return array_map(function ($catId) {return \App\Category::find($catId);}, $randomCategoriesIds);
+        return array_map(function ($catId) {return \App\Models\Category::find($catId);}, $randomCategoriesIds);
     }
 }

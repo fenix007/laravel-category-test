@@ -3,7 +3,7 @@
 namespace App\Transformers;
 
 
-use App\Product;
+use App\Models\Product;
 use League\Fractal\TransformerAbstract;
 
 class ProductTransformer extends TransformerAbstract

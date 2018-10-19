@@ -3,7 +3,7 @@
 namespace Tests\Feature;
 
 
-use App\Category;
+use App\Models\Category;
 use Tests\TestCase;
 
 class CategoryTest extends TestCase
