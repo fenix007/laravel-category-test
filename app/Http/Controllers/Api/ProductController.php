@@ -3,12 +3,21 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProductRequest;
 use App\Models\Product;
+use App\Services\ProductService;
 use App\Transformers\ProductTransformer;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    private $productService;
+
+    public function __construct(ProductService $productService)
+    {
+        $this->productService = $productService;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +27,7 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $category = $request->get('category');
-        $products = Product::forCategory($category);
+        $products = $this->productService->forCategory($category);
 
         return fractal()
             ->collection($products, new ProductTransformer)
@@ -28,12 +37,12 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param ProductRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
-        $product = Product::create($request->all());
+        $product = $this->productService->create($request->all());
 
         return fractal()
             ->item($product, new ProductTransformer)
@@ -56,13 +65,13 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Product  $product
+     * @param ProductRequest $request
+     * @param  \App\Models\Product $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(ProductRequest $request, Product $product)
     {
-        $product->update($request->all());
+        $this->productService->update($product, $request->all());
 
         return fractal()
             ->item($product, new ProductTransformer)
@@ -77,7 +86,7 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        $product->delete();
+        $this->productService->remove($product);
 
         return response()->json(null, 204);
     }

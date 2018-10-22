@@ -22,6 +22,11 @@ class CategoryService implements CategoryServiceInterface
         return Category::create($attributes);
     }
 
+    public function update(Category $category, array $attributes = [])
+    {
+        return $category->update($attributes);
+    }
+
     public function save(Category $category): bool
     {
         return $category->save();

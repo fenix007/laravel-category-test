@@ -65,4 +65,7 @@ return [
 
     ],
 
+    'product' => [
+        'photo' => env('PRODUCT_STORAGE_PHOTO_PATH')
+    ]
 ];

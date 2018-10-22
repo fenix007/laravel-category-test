@@ -68,7 +68,7 @@ class CategoryController extends Controller
      */
     public function update(CategoryRequest $request, Category $category)
     {
-        $category->update($request->all());
+        $this->categoryService->update($category, $request->all());
 
         return fractal()
             ->item($category, new CategoryTransformer)
