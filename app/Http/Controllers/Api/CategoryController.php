@@ -7,6 +7,7 @@ use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
 use App\Services\CategoryService;
 use App\Transformers\CategoryTransformer;
+use App\Transformers\HierarchyCategoryTransformer;
 
 class CategoryController extends Controller
 {
@@ -28,6 +29,15 @@ class CategoryController extends Controller
 
         return fractal()
             ->collection($categories, new CategoryTransformer)
+            ->toArray();
+    }
+
+    public function hierarchy()
+    {
+        $categories = $this->categoryService->all();
+
+        return fractal()
+            ->collection($categories->toHierarchy(), new HierarchyCategoryTransformer)
             ->toArray();
     }
 

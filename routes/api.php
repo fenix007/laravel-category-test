@@ -19,5 +19,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::apiResource('product', '\App\Http\Controllers\Api\ProductController');
 
+Route::get('category-hierarchy', '\App\Http\Controllers\Api\CategoryController@hierarchy');
 Route::apiResource('category', '\App\Http\Controllers\Api\CategoryController');
 
