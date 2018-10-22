@@ -1,12 +1,14 @@
 <template>
-    <div class="sidebar">
-        <vue-tree-navigation :items="items" :defaultOpenLevel="1" />
-    </div>
+    <ul id="tree-menu">
+        <item
+                class="item"
+                v-for="(model, index) in items"
+                :key="index"
+                :model="model">
+        </item>
+    </ul>
 </template>
 <script>
-    import ListToTree from '../services/ListToTree'
-    const listToTree = new ListToTree();
-
     export default {
         data: function () {
             return {
@@ -15,9 +17,9 @@
         },
         mounted() {
             const app = this;
-            this.$http.get('/api/category')
+            this.$http.get('/api/category-hierarchy')
                 .then(function (resp) {
-                    app.items = listToTree.toTree(resp.data.data);
+                    app.items = resp.data.data;
                 })
                 .catch(function (resp) {
                     console.log(resp);

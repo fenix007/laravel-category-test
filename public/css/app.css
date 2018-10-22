@@ -1,2 +1,20 @@
-@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
+@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);body {
+  font-family: Menlo, Consolas, monospace;
+  color: #444;
+}
+
+.item {
+  cursor: pointer;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+ul {
+  padding-left: 1em !important;
+  line-height: 1.5em;
+  list-style: square !important;
+  list-style-type: dot !important;
+}
 

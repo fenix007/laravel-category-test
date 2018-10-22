@@ -64,14 +64,7 @@
         },
         watch: {
             '$route' (to, from) {
-                let categoryHash = this.$route.hash.substr(1);
-                let category = categoryHash.substr(categoryHash.search(/(?<=^|&)category=/))
-                        .split('&')[0]
-                        .split('=')[1];
-                if (category) {
-                    this.$router.replace({query: {category: category}});
-                    this.loadProducts();
-                }
+                this.loadProducts();
             }
         }
     }
